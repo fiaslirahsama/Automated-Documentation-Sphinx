@@ -135,13 +135,18 @@ def generate_docs():
   for row in reps:
     dreps = row._asdict()
     APP_SOURCE_DIR = BASEDIR.replace("Automated-Documentation-Sphinx", dreps['repository_name']).replace("app_center","").replace('\\', '\\\\')
-    TEMPLATE_DIR = os.path.join(os.path.join(BASEDIR, "templates\documentation"), dreps['repository_name'])
-    SOURCE_DIR = os.path.join(TEMPLATE_DIR, 'source')
-    BUILD_DIR = os.path.join(TEMPLATE_DIR, 'build')
+    DOCUMENTATION_DIR = os.path.join(BASEDIR, "./templates/documentation")
+    if os.path.exists(DOCUMENTATION_DIR) == False:
+      os.mkdir(DOCUMENTATION_DIR)
+      with open(os.path.join(DOCUMENTATION_DIR, ".gitignore"), 'w+') as f:
+        f.write("*\n*/\n!.gitignore")
+    TEMPLATE_DIR = os.path.join(DOCUMENTATION_DIR, f"./{dreps['repository_name']}")
     if os.path.exists(TEMPLATE_DIR) == True:
       shutil.rmtree(TEMPLATE_DIR, ignore_errors=True)
     if os.path.exists(TEMPLATE_DIR) == False:
       os.mkdir(TEMPLATE_DIR)
+    SOURCE_DIR = os.path.join(TEMPLATE_DIR, './source')
+    BUILD_DIR = os.path.join(TEMPLATE_DIR, './build')
     try:
       subprocess.run(
         [
