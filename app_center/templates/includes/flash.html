@@ -1,0 +1,17 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == 'success' %}
+      
+      {% else %}
+      <div class="alert alert-warning alert-dismissible show flex items-center mb-2 mt-2" role="alert"> 
+        <i data-lucide="alert-triangle" class="w-6 h-6 mr-2"></i> {{message}}
+        <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close"> 
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button> 
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+

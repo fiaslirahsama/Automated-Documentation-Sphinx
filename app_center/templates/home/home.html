@@ -1,0 +1,241 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard Overview {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Resources -->
+<script src="{{ url_for('static', filename='tabel/jquery-3.5.1.js') }}"></script>
+<script src="{{ url_for('static', filename='chart/version5.7/am-chart-index.js') }}"></script>
+<script src="{{ url_for('static', filename='chart/version5.7/am-chart-percent.js') }}"></script>
+<script src="{{ url_for('static', filename='chart/version5.7/am-chart-xy.js') }}"></script>
+<script src="{{ url_for('static', filename='chart/am-chart-radar.js') }}"></script>
+<script src="{{ url_for('static', filename='chart/am-chart-animated.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/datatable/datatable.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/datatable/datatable-boostrap5.css') }}">
+
+<div class="content">
+  <div class="grid grid-cols-12 gap-6">
+
+
+    <div class="col-span-12 2xl:col-span-12">
+      <div class="grid grid-cols-12 gap-6">
+        <!-- BEGIN: General Report -->
+        <div class="col-span-12 mt-4">
+
+          <div class="w-full sm:w-auto flex sm:mt-0 mr-auto">
+            <h1 class="text-2xl font-medium font-bold">
+              Home
+            </h1>
+          </div>
+
+          <div class="col-span-12 mt-4">
+            <div class="box p-8 mt-4 relative overflow-hidden intro-y text-white"
+              style="background: linear-gradient(0deg, rgba(26,150,255,1) 26%, rgba(120,28,190,1) 79%);">
+              <div class="leading-[2.15rem] w-full sm:w-100 block text-3xl text-lg font-bold font-large mt-3"
+                style="font-weight: 1000;">Dokumentasi Kodingan <br> 4.0</div>
+              <div class="w-full sm:w-73 leading-relaxed text-black/70  mb-5">" Empower Your Code Insight"</div>
+              <img class="hidden sm:block absolute top-0 right-0 -mt-3 mr-6" style="width: 25%;"
+                alt="Midone - HTML Admin Template" src="static/assets/images/icon/ngoding.png">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-6 mt-3 mb-8 pb-8">
+
+            <div class="col-span-12 sm:col-span-12 xl:col-span-12 intro-y">
+              <div class="grid grid-cols-12 gap-6 mt-2">
+                {% for rep in repository %}
+                <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y" onclick="zipfile('{{rep.repository}}')"> 
+                  <div class="report-box zoom-in">
+                    <div class="box p-3 text-center">
+                      <div class="text-slate-100 mt-1 font-bold">{{rep.repository}} </div>
+                      {% if rep.icon_file == None or rep.icon_file == '' %}
+                      <img src="static/assets/images/icon/ngoding.png" style="height: 250px; width: 250px;" />
+                      {% else %}
+                      <img src="static/files/{{rep.icon_file}}" style="height: 250px; width: 250px;" />
+                      {% endif %}
+                      <!-- <div class="text-small font-bold text-slate-100 text-success mt-1">+ 18.34 % <i
+                          data-lucide="trending-up" style="display: inline;" class="w-4 h-4 ml-2"></i></div> -->
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+                <!-- <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y"  onclick="window.location.href='/documentation/RAB'">
+                  <div class="report-box zoom-in">
+                    <div class="box p-3 text-center">
+                      <div class="text-slate-100 mt-1 font-bold">RAB </div>
+                      <img src="static/assets/images/icon/mtn.png" style="height: 250px; width: 250px;" />
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form method="POST" action="zip-file" id="form_zip" hidden>
+  <input type="text" id="repository" name="repository">
+</form>
+
+<script>
+  JQ = $.noConflict()
+  function zipfile(repository){
+    JQ("#repository").val(repository)
+    JQ("#form_zip").submit()
+  }
+</script>
+
+
+<style>
+  .chartdiv {
+    width: 100%;
+    height: 180px;
+  }
+
+  .chartdiv2 {
+    width: 100%;
+    height: 250px;
+  }
+</style>
+
+<style>
+  .first-row {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: auto auto auto auto auto auto;
+    margin-bottom: 16px;
+  }
+
+  .second-row {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: auto auto auto;
+  }
+
+  .dashboard-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    border-radius: 6px;
+    border: 1px solid var(--border-color-chart) !important;
+  }
+
+  .dashboard-item .title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-title-color);
+  }
+
+  .dashboard-item .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-base-color);
+  }
+
+  .single-chart-container {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    margin-top: 16px;
+    gap: 16px;
+  }
+
+  .single-chart-container>div {
+    text-align: center;
+    background-color: var(--bg-color);
+    padding: 16px 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: var(--text-base-color);
+  }
+
+  .single-chart-container>div>.value {
+    font-size: 14px;
+    color: var(--text-base-color);
+
+  }
+
+  .single-chart-container>div>.chart-label {
+    font-size: 3px;
+  }
+
+  .apex-chart {
+    color: var(--text-base-color);
+  }
+
+  .last-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+    margin-top: 16px;
+    gap: 16px;
+  }
+
+  .last-row>div {
+    background-color: var(--bg-color);
+    padding: 16px 8px 0 0;
+    border-radius: 6px;
+  }
+
+  .last-row>div>div {
+    text-align: center;
+  }
+
+  .last-row>div>.value,
+  .last-row>div>.line-chart-label {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-base-color);
+  }
+
+  .last-row>div>.chart-label {
+    font-size: 9px;
+  }
+
+  @media (max-width: 815px) {
+    .first-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .single-chart-container {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    .last-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .first-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .second-row {
+      grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    }
+
+    .single-chart-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .last-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+</style>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

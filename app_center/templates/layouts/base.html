@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <link href="static/assets/images/logo/ubs-dark.png" rel="shortcut icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Team Center 4.0">
+  <title>Power Monitoring - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="static/assets/css/app.css" />
+</head>
+
+<body class="py-5 md:py-0">
+
+  {% include 'includes/mobile-menu.html' %}
+  
+  {% include 'includes/header.html' %}
+  
+  <div class="flex overflow-hidden">
+    
+    {% include 'includes/sidebar.html' %}
+    
+    {% block content %}{% endblock content %}
+
+  </div>
+
+  {% include 'includes/dark-mode.html' %}
+
+  {% include 'includes/scripts.html' %}
+
+</body>
+
+</html>
