@@ -1,0 +1,32 @@
+<!-- BEGIN: JS Assets-->
+<!-- <script src="static/assets/js/markercusterer.js"></script> -->
+<script src="static/assets/js/app.js"></script>
+<!-- END: JS Assets-->
+
+
+<!-- DARK MODE -->
+<script>
+  function darkMode() {
+    var cb_dark_mode = document.getElementById("cb_dark");
+    if (cb_dark_mode.checked) {
+        cb_dark_mode.checked = false;
+    }else {
+        cb_dark_mode.checked = true;
+    }
+    //console.log(cb_dark_mode.checked);
+      if (cb_dark_mode.checked) {
+        const htmlElement = document.querySelector('html');
+
+        // Remove the "light" class and add the "dark" class
+        htmlElement.classList.remove('light');
+        htmlElement.classList.add('dark');
+      }else{
+        const htmlElement = document.querySelector('html');
+
+        // Remove the "light" class and add the "dark" class
+        htmlElement.classList.remove('dark');
+        htmlElement.classList.add('light');
+      }
+
+    }
+</script>

@@ -1,0 +1,35 @@
+<nav class="side-nav">
+  <ul class="siderbar1">
+    <li>
+      <a href="home"
+        class="{{ 'side-menu side-menu--active' if request.path == '/home' else 'side-menu' }}">
+        <div class="side-menu__icon">  <i data-lucide="home"></i> </div>
+        <div class="side-menu__title">
+          Home
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)"
+        class="{{ 'side-menu side-menu--active' if  request.path in ['/m-repository'] else 'side-menu' }}">
+        <div class="side-menu__icon"> <i data-lucide="box"></i> </div>
+        <div class="side-menu__title">
+          Master
+          <div class="side-menu__sub-icon transform"> <i data-lucide="chevron-down"></i> </div>
+        </div>
+      </a>
+      <ul class="{{ 'side-menu__sub-open' if request.path in ['/m-repository'] else '' }}">
+        {% if current_user.roles == 'DEVELOPER' %}
+          <li>
+            <a href="m-repository" class="{{ 'side-menu side-menu--active' if request.path == '/m-repository' else 'side-menu' }}">
+              <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+              <div class="side-menu__title"> Repository </div>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </li>
+    <!-- <li class="side-nav__devider my-6"></li> -->
+    <!-- <li class="side-nav__devider my-6"></li> -->
+  </ul>
+</nav>

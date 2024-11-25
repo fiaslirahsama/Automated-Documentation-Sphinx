@@ -1,0 +1,72 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Home </h3>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="home"><i data-feather="home"></i></a></li>
+          <li class="breadcrumb-item active">Home</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid dashboard-default">
+  <div class="row">
+    <div class="col-xxl-12 col-xl-12 col-lg-12 ">
+      <div class="card profile-greeting">
+        <div class="card-body">
+          <div class="greeting-user">
+            <h4><span>Selamat Datang,</h4>
+            <div class="profile-vector">
+              <ul class="dots-images">
+                <li class="dot-small bg-info dot-1"></li>
+                <li class="dot-medium bg-primary dot-2"></li>
+                <li class="dot-medium bg-info dot-3"></li>
+                <li class="semi-medium bg-primary dot-4"></li>
+                <li class="dot-small bg-info dot-5"></li>
+                <li class="dot-big bg-info dot-6"></li>
+                <li class="dot-small bg-primary dot-7"></li>
+                <li class="semi-medium bg-primary dot-8"></li>
+                <li class="dot-big bg-info dot-9"></li>
+              </ul>
+              {% if current_user.env == 'Production' %}
+              <img src="http://172.20.33.42/foto/ubs/2013/2013/current_user.nik.JPG" width="150" height="150" class="rounded-circle">
+
+              {% else %}
+              <img src="{{ url_for('static', filename='assets/images/dashboard/default/profile.png') }}" width="150" height="150" class="rounded-circle">
+              {% endif %}
+              <ul class="vector-image">
+                <li> <img src="static/assets/images/dashboard/default/ribbon1.png" alt=""></li>
+                <li> <img src="static/assets/images/dashboard/default/ribbon3.png" alt=""></li>
+                <li> <img src="static/assets/images/dashboard/default/ribbon4.png" alt=""></li>
+                <li> <img src="static/assets/images/dashboard/default/ribbon5.png" alt=""></li>
+                <li> <img src="static/assets/images/dashboard/default/ribbon6.png" alt=""></li>
+                <li> <img src="static/assets/images/dashboard/default/ribbon7.png" alt=""></li>
+              </ul>
+            </div>
+            <h4> {{current_user.nama}} <span class="right-circle"><i
+                  class="fa fa-check-circle font-primary f-14 middle"></i></span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}
